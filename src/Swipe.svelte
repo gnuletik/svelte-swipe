@@ -20,6 +20,7 @@
     swipeElements,
     availableDistance = 0,
     swipeWrapper,
+    itemsHolder
     swipeHandler,
     pos_axis = 0,
     page_axis = is_vertical ? 'pageY' : 'pageX',
@@ -35,7 +36,9 @@
   let fire = createEventDispatcher();
 
   function init(){
-    swipeElements = swipeWrapper.querySelectorAll('.swipeable-item');
+    let swaipableItems = swipeWrapper.querySelectorAll('.swipeable-item');
+    swipeElements = [...swaipableItems];
+    // swipeWrapper.innerHTML = '';
     total_elements = swipeElements.length;
     update();
   }
