@@ -138,8 +138,11 @@
       e.preventDefault();
 
       if (distance <= availableMeasure && distance >= 0) {
-        [...swipeElements].forEach((element, i) => {
-          element.style.cssText = generateTouchPosCss((availableSpace * i) - distance);
+
+        swipeElements.forEach((element, i) => {
+          if(i >= active_item + 1){
+            element.style.cssText = generateTouchPosCss((availableSpace * i) - distance);
+          }
         });
         availableDistance = distance;
         last_axis_pos = _axis;
