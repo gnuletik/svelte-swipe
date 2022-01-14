@@ -44,10 +44,18 @@
   }
 
   function update(){
+    console.log('Update');
     let {offsetWidth, offsetHeight} = swipeWrapper.querySelector('.swipeable-total_elements');
+    itemsHolder = swipeWrapper.querySelector('.swipeable-slot-wrapper');
+    itemsHolder.innerHTML = '';
     availableSpace = is_vertical ? offsetHeight : offsetWidth;
-     [...swipeElements].forEach((element, i) => {
-      element.style.transform = generateTranslateValue(availableSpace * i);
+     swipeElements.forEach((element, i) => {
+       if(i >= active_item + 1){
+         itemsHolder.appendChild(element);
+         element.rendered = true;
+        element.style.transform = generateTranslateValue(availableSpace * i);
+       }
+       element.rendered = false;
     });
     availableDistance = 0;
     availableMeasure = availableSpace * (total_elements - 1)
