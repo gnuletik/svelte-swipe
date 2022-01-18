@@ -50,10 +50,8 @@
     itemsHolder.innerHTML = '';
     availableSpace = is_vertical ? offsetHeight : offsetWidth;
      swipeElements.forEach((element, i) => {
-       if(i >= active_item + 1){
-         itemsHolder.appendChild(element);
-         element.rendered = true;
-        element.style.transform = generateTranslateValue(availableSpace * i);
+       if(i <= active_item + 1){
+         element.style.transform = generateTranslateValue(availableSpace * i);
        }
        element.rendered = false;
     });
