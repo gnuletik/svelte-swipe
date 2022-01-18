@@ -52,6 +52,8 @@
      swipeElements.forEach((element, i) => {
        if(i <= active_item + 1){
          element.style.transform = generateTranslateValue(availableSpace * i);
+         element.rendered = true;
+         itemsHolder.appendChild(element);
        }
        element.rendered = false;
     });
