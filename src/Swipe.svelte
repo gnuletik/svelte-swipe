@@ -187,6 +187,8 @@
       element.style.cssText = generateTouchPosCss((_as * i) - pos_axis, true);
     });
 
+    let prev_active_item = active_item;
+
     active_item = activeIndicator;
     defaultIndex = active_item;
     eventDelegate('remove');
