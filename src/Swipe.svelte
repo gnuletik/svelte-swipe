@@ -20,7 +20,7 @@
     swipeElements,
     availableDistance = 0,
     swipeWrapper,
-    itemsHolder
+    itemsHolder,
     swipeHandler,
     pos_axis = 0,
     page_axis = is_vertical ? 'pageY' : 'pageX',
