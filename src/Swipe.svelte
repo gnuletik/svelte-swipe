@@ -183,7 +183,7 @@
     pos_axis = availableDistance;
     activeIndicator = (availableDistance / _as);
 
-    [...swipeElements].forEach((element, i) => {
+    renderedElements.forEach((element, i) => {
       element.style.cssText = generateTouchPosCss((_as * i) - pos_axis, true);
     });
 
