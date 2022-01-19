@@ -11,6 +11,7 @@
 
   export let active_item = 0; //readonly
   export let is_vertical = false;
+  export let loop_mode = true;
 
   let activeIndicator = 0,
     indicators,
@@ -21,6 +22,7 @@
     availableDistance = 0,
     swipeWrapper,
     itemsHolder,
+    renderedElements = [],
     swipeHandler,
     pos_axis = 0,
     page_axis = is_vertical ? 'pageY' : 'pageX',
@@ -49,14 +51,25 @@
     itemsHolder = swipeWrapper.querySelector('.swipeable-slot-wrapper');
     itemsHolder.innerHTML = '';
     availableSpace = is_vertical ? offsetHeight : offsetWidth;
-     swipeElements.forEach((element, i) => {
-       if(i <= active_item + 1){
-         element.style.transform = generateTranslateValue(availableSpace * i);
-         element.rendered = true;
-         itemsHolder.appendChild(element);
-       }
-       element.rendered = false;
+    let visibility_count = active_item + 1;
+    if(loop_mode){
+      defaultIndex = 1;
+      swipeElements.unshift(swipeElements.pop());
+      visibility_count = active_item + 2;
+    }
+    swipeElements.forEach((element, i) => {
+      if(i <= visibility_count){
+        element.style.transform = generateTranslateValue(availableSpace * i);
+        element.classList.add('item_' + i);
+        element.rendered = true;
+        itemsHolder.appendChild(element);
+        renderedElements.push(element);
+      }else{
+        element.style.visibility = 'hidden';
+      }
+
     });
+
     availableDistance = 0;
     availableMeasure = availableSpace * (total_elements - 1)
     if(defaultIndex){
@@ -127,6 +140,9 @@
   let touch_active = false;
 
   function onMove(e){
+    console.log('onMove');
+    console.log('active',active_item);
+      console.log('renderedelements', renderedElements);
     if (touch_active) {
       e.stopImmediatePropagation();
       e.stopPropagation();
@@ -140,9 +156,7 @@
       if (distance <= availableMeasure && distance >= 0) {
 
         swipeElements.forEach((element, i) => {
-          if(i >= active_item + 1){
             element.style.cssText = generateTouchPosCss((availableSpace * i) - distance);
-          }
         });
         availableDistance = distance;
         last_axis_pos = _axis;
@@ -164,6 +178,8 @@
   }
 
   function onEnd(e) {
+     console.log('OnEnd');
+      // console.log('active',active_item);
     if(e && e.cancelable) {
       e.preventDefault();
     }
